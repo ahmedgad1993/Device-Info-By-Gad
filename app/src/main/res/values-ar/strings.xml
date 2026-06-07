@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Device Info By Gad</string>
+    <string name="tab_dashboard">الرئيسية</string>
+    <string name="tab_cpu">المعالج</string>
+    <string name="tab_ram">الذاكرة</string>
+    <string name="tab_battery">البطارية</string>
+    <string name="tab_network">الشبكة</string>
+    <string name="tab_display">الشاشة</string>
+    <string name="tab_sensors">المستشعرات</string>
+    <string name="tab_tests">اختبارات</string>
+    <string name="tab_camera">الكاميرا</string>
+    <string name="tab_security">الأمان</string>
+    <string name="tab_apps">التطبيقات</string>
+    <string name="tab_settings">الإعدادات</string>
+
+    <string name="contact_us">تواصل معنا للمقترحات والشكاوي</string>
+    <string name="app_not_installed">التطبيق غير مثبت</string>
+
+    <string name="my_phone_processor">المعالج</string>
+    <string name="my_phone_ram">الذاكرة (RAM)</string>
+    <string name="my_phone_storage">مساحة التخزين</string>
+    <string name="my_phone_battery">البطارية</string>
+    <string name="my_phone_display">الشاشة والهيكل</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="loading">جاري تحميل المواصفات...</string>
+
+    <string name="export_report">تصدير التقرير</string>
+    <string name="export_success">تم تصدير التقرير بنجاح</string>
+    <string name="export_failed">فشل التصدير</string>
+
+    <string name="test_volume">اختبار أزرار الصوت</string>
+    <string name="test_proximity">اختبار التقارب</string>
+    <string name="test_flashlight_sos">كشاف طوارئ (SOS)</string>
+    <string name="test_gps">اختبار GPS</string>
+    <string name="test_ear_speaker">اختبار سماعة الأذن</string>
+    <string name="test_gyroscope">لعبة الجيروسكوب</string>
+    <string name="test_multi_paint">الرسم بلمس متعدد</string>
+
+    <string name="title_dashboard">Device Info By Gad</string>
+    
+    <string name="sys_apps">النظام</string>
+    <string name="user_apps">المستخدم</string>
+    <string name="all_apps">الكل</string>
+    <string name="search_apps">البحث في التطبيقات...</string>
+    <string name="app_size">الحجم</string>
+    <string name="app_version">الإصدار</string>
+    <string name="app_install_date">تاريخ التثبيت</string>
+    <string name="extract_apk">نسخ</string>
+    <string name="select_backup_path">تحديد مسار النسخ</string>
+    <string name="select_apps">تحديد</string>
+    <string name="done_backup">تم</string>
+    <string name="select_all">تحديد الكل</string>
+    <string name="backup_path_saved">تم حفظ مسار النسخ</string>
+    <string name="backup_path_not_set">يرجى تحديد مسار النسخ أولاً</string>
+    <string name="backup_success">تم النسخ بنجاح</string>
+    <string name="backup_failed">فشل النسخ</string>
+    <string name="apk_extracted">تم استخراج APK</string>
+    
+    <string name="sort_by_name_az">الاسم (أ-ي)</string>
+    <string name="sort_by_name_za">الاسم (ي-أ)</string>
+    <string name="sort_by_date_new">تاريخ التثبيت (الأحدث)</string>
+    <string name="sort_by_size_large">الحجم (الأكبر)</string>
+    <string name="cpu_usage">استخدام المعالج</string>
+    <string name="not_supported">غير مدعوم</string>
+    
+    <string name="cpu_thermal">حرارة المعالج (SOC)</string>
+    <string name="cpu_per_core">استهلاك كل نواة</string>
+    
+    <string name="battery_est_time">الوقت المتبقي / للشحن</string>
+    <string name="battery_cycle">عدد دورات الشحن</string>
+    
+    <string name="net_ping">اختبار Ping</string>
+    <string name="net_dns">خوادم DNS</string>
+    <string name="net_gateway">البوابة الافتراضية</string>
+    <string name="net_interfaces">واجهات الشبكة</string>
+    
+    <string name="camera_raw">دعم صور RAW</string>
+    <string name="camera_iso">نطاق ISO</string>
+    <string name="camera_focal">الأبعاد البؤرية</string>
+    
+    <string name="disp_hdr">قدرات HDR</string>
+    <string name="disp_physical">الأبعاد الحقيقية</string>
+    
+    <string name="sensor_bubble">ميزان الماء</string>
+    <string name="sensor_compass">البوصلة</string>
+    <string name="quick_ram">الذاكرة %</string>
+    <string name="quick_cpu">المعالج %</string>
+    <string name="quick_battery">البطارية %</string>
+    <string name="quick_internal_storage">تخزين داخلي %</string>
+    <string name="quick_external_storage">تخزين خارجي %</string>
+    
+    <string name="cpu_architecture">المعمارية</string>
+    <string name="cpu_cores">استخدام النوى</string>
+    <string name="cpu_board">اللوحة الأم</string>
+    
+    <string name="ram_total">إجمالي الذاكرة</string>
+    <string name="ram_available">الذاكرة المتوفرة</string>
+    <string name="storage_total">إجمالي التخزين</string>
+    <string name="storage_free">التخزين الفارغ</string>
+    <string name="storage_used">التخزين المستخدم</string>
+    
+    <string name="battery_health">الصحة</string>
+    <string name="battery_level">المستوى</string>
+    <string name="battery_tech">النوع</string>
+    <string name="battery_temp">الحرارة</string>
+    <string name="battery_voltage">الجهد</string>
+    <string name="battery_status">الحالة</string>
+    <string name="battery_current">سرعة الشحن</string>
+    
+    <string name="net_wifi">شبكة الواي فاي</string>
+    <string name="net_speed">سرعة الاتصال</string>
+    <string name="net_type">نوع الشبكة</string>
+    <string name="net_ip">عنوان IP</string>
+    
+    <string name="disp_size">حجم الشاشة</string>
+    <string name="disp_res">الدقة</string>
+    <string name="disp_refresh">معدل التحديث</string>
+    <string name="disp_dpi">كثافة الشاشة (DPI)</string>
+    <string name="os_version">إصدار النظام</string>
+    <string name="os_api">مستوى API</string>
+    <string name="os_build">رقم البناء</string>
+    <string name="os_uptime">مدة التشغيل</string>
+    
+    <string name="camera_front">الكاميرا الأمامية</string>
+    <string name="camera_back">الكاميرا الخلفية</string>
+    <string name="camera_megapixels">ميجابكسل</string>
+    <string name="camera_aperture">فتحة العدسة</string>
+    <string name="camera_ois">التثبيت البصري (OIS)</string>
+    <string name="camera_resolution">أقصى دقة فيديو</string>
+    <string name="camera_support_yes">مدعوم</string>
+    <string name="camera_support_no">غير مدعوم</string>
+    
+    <string name="sec_root">صلاحيات الروت</string>
+    <string name="sec_root_yes">موجود (Rooted)</string>
+    <string name="sec_root_no">غير موجود</string>
+    <string name="sec_drm">مستوى حماية Widevine</string>
+    <string name="sec_encryption">تشفير الجهاز</string>
+    <string name="sec_encrypted">مشفر</string>
+    <string name="sec_unencrypted">غير مشفر</string>
+    
+    <string name="test_touch">اختبار شبكة اللمس</string>
+    <string name="test_multitouch">اختبار اللمس المتعدد</string>
+    <string name="test_colors">اختبار البكسل الميت</string>
+    <string name="test_vibration">اختبار الاهتزاز</string>
+    <string name="test_flashlight">اختبار الكشاف</string>
+    <string name="test_mic">اختبار الميكروفون</string>
+    <string name="test_speaker_l">اختبار السماعة (يسار)</string>
+    <string name="test_speaker_r">اختبار السماعة (يمين)</string>
+    <string name="test_biometrics">اختبار البصمة</string>
+    <string name="test_haptics">اختبار الاهتزاز المتقدم</string>
+    <string name="haptic_short">قصير</string>
+    <string name="haptic_long">طويل</string>
+    <string name="haptic_heartbeat">نبض القلب</string>
+    
+    <string name="set_lang">اللغة</string>
+    <string name="set_theme">المظهر</string>
+    <string name="light_theme">فاتح</string>
+    <string name="dark_theme">داكن</string>
+    <string name="system_theme">النظام</string>
+</resources>

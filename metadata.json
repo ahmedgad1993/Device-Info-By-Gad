@@ -1,0 +1,6 @@
+{
+  "name": "Device Info By Gad",
+  "description": "Device Info By Gad - detailed system overview.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

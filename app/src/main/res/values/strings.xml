@@ -1,0 +1,160 @@
+<resources>
+    <string name="app_name">Device Info By Gad</string>
+    <string name="tab_dashboard">Dashboard</string>
+    <string name="tab_cpu">CPU</string>
+    <string name="tab_ram">RAM</string>
+    <string name="tab_battery">Battery</string>
+    <string name="tab_network">Network</string>
+    <string name="tab_display">Display</string>
+    <string name="tab_sensors">Sensors</string>
+    <string name="tab_tests">Tests</string>
+    <string name="tab_camera">Camera</string>
+    <string name="tab_security">Security</string>
+    <string name="tab_apps">Apps</string>
+    <string name="tab_settings">Settings</string>
+
+    <string name="contact_us">Contact Us for suggestions and complaints</string>
+    <string name="app_not_installed">App not installed</string>
+
+    <string name="my_phone_processor">Processor</string>
+    <string name="my_phone_ram">RAM</string>
+    <string name="my_phone_storage">Storage</string>
+    <string name="my_phone_battery">Battery</string>
+    <string name="my_phone_display">Display &amp; Body</string>
+    <string name="retry">Retry</string>
+    <string name="loading">Loading specs...</string>
+
+    <string name="export_report">Export Report</string>
+    <string name="export_success">Report Exported Successfully</string>
+    <string name="export_failed">Export Failed</string>
+
+    <string name="test_volume">Volume Buttons Test</string>
+    <string name="test_proximity">Proximity Test</string>
+    <string name="test_flashlight_sos">Flashlight SOS</string>
+    <string name="test_gps">GPS Test</string>
+    <string name="test_ear_speaker">Ear Speaker Test</string>
+    <string name="test_gyroscope">Gyroscope Minigame</string>
+    <string name="test_multi_paint">Multi-Finger Paint</string>
+
+    <string name="title_dashboard">Device Info By Gad</string>
+    
+    <string name="sys_apps">System</string>
+    <string name="user_apps">User</string>
+    <string name="all_apps">All</string>
+    <string name="search_apps">Search Apps...</string>
+    <string name="app_size">Size</string>
+    <string name="app_version">Version</string>
+    <string name="app_install_date">Install Date</string>
+    <string name="extract_apk">Backup</string>
+    <string name="select_backup_path">Select Backup Path</string>
+    <string name="select_apps">Select</string>
+    <string name="done_backup">Done</string>
+    <string name="select_all">Select All</string>
+    <string name="backup_path_saved">Backup Path Saved</string>
+    <string name="backup_path_not_set">Please select a backup path first</string>
+    <string name="backup_success">Backup Successful</string>
+    <string name="backup_failed">Backup Failed</string>
+    <string name="apk_extracted">APK Extracted</string>
+    
+    <string name="sort_by_name_az">Name (A-Z)</string>
+    <string name="sort_by_name_za">Name (Z-A)</string>
+    <string name="sort_by_date_new">Install Date (Newest)</string>
+    <string name="sort_by_size_large">Size (Largest)</string>
+    <string name="cpu_usage">CPU Usage</string>
+    <string name="not_supported">Not Supported</string>
+    
+    <string name="cpu_thermal">SOC Temperature</string>
+    <string name="cpu_per_core">Per-Core Usage</string>
+    
+    <string name="battery_est_time">Est. Time Remaining/Full</string>
+    <string name="battery_cycle">Cycle Count</string>
+    
+    <string name="net_ping">Ping Test (google.com)</string>
+    <string name="net_dns">DNS Servers</string>
+    <string name="net_gateway">Default Gateway</string>
+    <string name="net_interfaces">Network Interfaces</string>
+    
+    <string name="camera_raw">RAW Image Support</string>
+    <string name="camera_iso">ISO Range</string>
+    <string name="camera_focal">Focal Lengths</string>
+    
+    <string name="disp_hdr">HDR Capabilities</string>
+    <string name="disp_physical">Physical Dimensions</string>
+    
+    <string name="sensor_bubble">Bubble Level</string>
+    <string name="sensor_compass">Compass</string>
+    <string name="quick_ram">RAM %</string>
+    <string name="quick_cpu">CPU %</string>
+    <string name="quick_battery">Battery %</string>
+    <string name="quick_internal_storage">Int Storage %</string>
+    <string name="quick_external_storage">Ext Storage %</string>
+    
+    <string name="cpu_architecture">Architecture</string>
+    <string name="cpu_cores">Cores Utilization</string>
+    <string name="cpu_board">Board</string>
+    
+    <string name="ram_total">Total RAM</string>
+    <string name="ram_available">Available RAM</string>
+    <string name="storage_total">Total Storage</string>
+    <string name="storage_free">Free Storage</string>
+    <string name="storage_used">Used Storage</string>
+    
+    <string name="battery_health">Health</string>
+    <string name="battery_level">Level</string>
+    <string name="battery_tech">Technology</string>
+    <string name="battery_temp">Temperature</string>
+    <string name="battery_voltage">Voltage</string>
+    <string name="battery_status">Status</string>
+    <string name="battery_current">Charging Current</string>
+    
+    <string name="net_wifi">Wi-Fi SSID</string>
+    <string name="net_speed">Link Speed</string>
+    <string name="net_type">Network Type</string>
+    <string name="net_ip">IP Address</string>
+    
+    <string name="disp_size">Screen Size</string>
+    <string name="disp_res">Resolution</string>
+    <string name="disp_refresh">Refresh Rate</string>
+    <string name="disp_dpi">Screen Density (DPI)</string>
+    <string name="os_version">OS Version</string>
+    <string name="os_api">API Level</string>
+    <string name="os_build">Build ID</string>
+    <string name="os_uptime">Uptime</string>
+    
+    <string name="camera_front">Front Camera</string>
+    <string name="camera_back">Back Camera</string>
+    <string name="camera_megapixels">Megapixels (MP)</string>
+    <string name="camera_aperture">Aperture</string>
+    <string name="camera_ois">Optical Image Stabilization (OIS)</string>
+    <string name="camera_resolution">Max Video Resolution</string>
+    <string name="camera_support_yes">Supported</string>
+    <string name="camera_support_no">Not Supported</string>
+    
+    <string name="sec_root">Root Access</string>
+    <string name="sec_root_yes">Rooted</string>
+    <string name="sec_root_no">Not Rooted</string>
+    <string name="sec_drm">Widevine Security Level</string>
+    <string name="sec_encryption">Device Encryption</string>
+    <string name="sec_encrypted">Encrypted</string>
+    <string name="sec_unencrypted">Unencrypted</string>
+    
+    <string name="test_touch">Touchscreen Grid Test</string>
+    <string name="test_multitouch">Multi-touch Test</string>
+    <string name="test_colors">Dead Pixel &amp; Burn-in</string>
+    <string name="test_vibration">Test Vibration</string>
+    <string name="test_flashlight">Test Flashlight</string>
+    <string name="test_mic">Microphone Test (dB Meter)</string>
+    <string name="test_speaker_l">Speaker Test (Left Channel)</string>
+    <string name="test_speaker_r">Speaker Test (Right Channel)</string>
+    <string name="test_biometrics">Biometrics Test</string>
+    <string name="test_haptics">Advanced Haptics Test</string>
+    <string name="haptic_short">Short</string>
+    <string name="haptic_long">Long</string>
+    <string name="haptic_heartbeat">Heartbeat</string>
+    
+    <string name="set_lang">Language</string>
+    <string name="set_theme">Theme</string>
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
+    <string name="system_theme">System Default</string>
+</resources>
