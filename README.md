@@ -1,21 +1,14 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Device Info By Gad
 
-# Run and deploy your AI Studio app
+A powerful, Jetpack Compose based Android application for monitoring hardware, software, network, battery, and system metrics.
 
-This contains everything you need to run your app locally.
+## Building the project
+Use standard gradle commands to build the project:
+`gradle assembleDebug`
 
-View your app in AI Studio: https://ai.studio/apps/8882d896-b667-4491-917c-08f11a5f037f
+## Screenshot Tests
+This project uses Roborazzi for screenshot tests. **Do not attempt to write binary images through text-editing tools**.
+- To generate or update the baseline reference screenshots, run: `gradle :app:recordRoborazziDebug`
+- To verify the current UI matches the baseline, run: `gradle :app:verifyRoborazziDebug`
 
-## Run Locally
-
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
-
-
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+Test assets are located under `app/src/test/screenshots/`.
