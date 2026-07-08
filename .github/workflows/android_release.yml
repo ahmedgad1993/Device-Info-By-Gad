@@ -24,19 +24,15 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Grant Execute Permission for Gradlew
-        run: chmod +x gradlew
-
       - name: Extract Version Name from build.gradle.kts
         id: extract_version
         run: |
-          # Dynamically extract the versionName value (e.g., 1.0) from the Gradle file
           VERSION_NAME=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts || echo "1.0")
           echo "Extracted version: $VERSION_NAME"
           echo "APP_VERSION=$VERSION_NAME" >> $GITHUB_ENV
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
 
       - name: Create or Update GitHub Release
         uses: softprops/action-gh-release@v2
