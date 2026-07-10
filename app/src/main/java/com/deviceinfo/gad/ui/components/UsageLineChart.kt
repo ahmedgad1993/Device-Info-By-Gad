@@ -3,10 +3,11 @@ package com.deviceinfo.gad.ui.components
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
@@ -19,6 +20,8 @@ import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.input.pointer.pointerInput
 import com.deviceinfo.gad.ui.components.LocalAnimationsEnabled
 
 @Composable
@@ -47,8 +50,27 @@ fun UsageLineChart(
     val animatedGlowAlpha = if (animationsEnabled) {
         animateFloatAsState(targetValue = targetGlowAlpha, animationSpec = tween(500), label = "glowAlpha").value
     } else targetGlowAlpha
+    
+    var isDrawing by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { isDrawing = true }
+    val drawProgress = if (animationsEnabled) {
+        animateFloatAsState(targetValue = if (isDrawing) 1f else 0f, animationSpec = tween(1000), label = "draw").value
+    } else 1f
 
-    Canvas(modifier = modifier.fillMaxSize()) {
+    var touchX by remember { mutableStateOf<Float?>(null) }
+
+    Canvas(modifier = modifier.fillMaxSize().pointerInput(Unit) {
+        awaitPointerEventScope {
+            while (true) {
+                val event = awaitPointerEvent()
+                if (event.changes.any { it.pressed }) {
+                    touchX = event.changes.firstOrNull { it.pressed }?.position?.x
+                } else {
+                    touchX = null
+                }
+            }
+        }
+    }) {
         val width = size.width
         val height = size.height
         
@@ -72,7 +94,10 @@ fun UsageLineChart(
         var lastX = 0f
         var lastY = 0f
 
-        data.forEachIndexed { index, value ->
+        val visiblePoints = (data.size * drawProgress).toInt().coerceAtLeast(1)
+        val pointsToDraw = data.take(visiblePoints)
+        
+        pointsToDraw.forEachIndexed { index, value ->
             val normalizedValue = ((value.coerceIn(minValue, maxValue) - minValue) / (maxValue - minValue))
             val x = index * pointSpacing
             val y = height - (normalizedValue * height)
@@ -132,5 +157,26 @@ fun UsageLineChart(
             radius = markerRadius,
             center = Offset(lastX, lastY)
         )
+        
+        // Tooltip
+        touchX?.let { tx ->
+            val index = (tx / pointSpacing).toInt().coerceIn(0, pointsToDraw.size - 1)
+            val v = pointsToDraw[index]
+            val px = index * pointSpacing
+            val py = height - (((v.coerceIn(minValue, maxValue) - minValue) / (maxValue - minValue)) * height)
+            
+            drawLine(color = animatedColor.copy(alpha = 0.5f), start = Offset(px, 0f), end = Offset(px, height), strokeWidth = 2f)
+            drawCircle(color = Color.White, radius = 5.dp.toPx(), center = Offset(px, py))
+            drawCircle(color = animatedColor, radius = 3.dp.toPx(), center = Offset(px, py))
+            
+            val text = "${(v * 100).toInt()}%"
+            val textPaint = android.graphics.Paint().apply {
+                color = android.graphics.Color.WHITE
+                textSize = 36f
+                textAlign = android.graphics.Paint.Align.CENTER
+                isAntiAlias = true
+            }
+            drawContext.canvas.nativeCanvas.drawText(text, px, (py - 20f).coerceAtLeast(40f), textPaint)
+        }
     }
 }

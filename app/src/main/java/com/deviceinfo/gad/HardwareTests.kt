@@ -1,4 +1,10 @@
 package com.deviceinfo.gad
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.input.pointer.pointerInput
+
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.animation.core.animateFloatAsState
 import com.deviceinfo.gad.R
 
 import android.content.Context
@@ -57,7 +63,7 @@ fun TestsTab(viewModel: CpuHardwareViewModel) {
                 vibrator?.vibrate(500)
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            android.util.Log.e("HardwareTests", "Error", e)
         }
     }
     
@@ -85,7 +91,7 @@ fun TestsTab(viewModel: CpuHardwareViewModel) {
                 }
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            android.util.Log.e("HardwareTests", "Error", e)
             isFlashlightOn = false
         }
     }
@@ -116,6 +122,10 @@ fun TestsTab(viewModel: CpuHardwareViewModel) {
         EarSpeakerTest { activeTest = "" }
     } else if (activeTest == "gyro") {
         GyroscopeTest { activeTest = "" }
+    } else if (activeTest == "refresh_rate") {
+        RefreshRateTest { activeTest = "" }
+    } else if (activeTest == "burn_in") {
+        BurnInTest { activeTest = "" }
     } else if (activeTest == "multi_paint") {
         MultiPaintTest { activeTest = "" }
     } else {
@@ -143,6 +153,10 @@ fun TestsTab(viewModel: CpuHardwareViewModel) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     DiagnosticTestCard(title = "Dead Pixels", icon = androidx.compose.material.icons.Icons.Default.Image, modifier = Modifier.weight(1f)) { activeTest = "colors" }
                     DiagnosticTestCard(title = "Multi Paint", icon = androidx.compose.material.icons.Icons.Default.FormatPaint, modifier = Modifier.weight(1f)) { activeTest = "multi_paint" }
+                }
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    DiagnosticTestCard(title = "Refresh Rate", icon = androidx.compose.material.icons.Icons.Default.Speed, modifier = Modifier.weight(1f)) { activeTest = "refresh_rate" }
+                    DiagnosticTestCard(title = "Burn-in Fixer", icon = androidx.compose.material.icons.Icons.Default.FlipToBack, modifier = Modifier.weight(1f)) { activeTest = "burn_in" }
                 }
             }
             
@@ -277,6 +291,74 @@ fun DeadPixelTest(onClose: () -> Unit) {
     ) {
         if (currentIndex == 0) {
             Text(stringResource(R.string.ui_tap_to_change_color_), color = Color.White, modifier = Modifier.align(Alignment.Center).padding(16.dp), style = MaterialTheme.typography.titleMedium)
+        }
+    }
+}
+
+@Composable
+fun RefreshRateTest(onClose: () -> Unit) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val windowManager = context.getSystemService(android.content.Context.WINDOW_SERVICE) as android.view.WindowManager
+    val display = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+        context.display
+    } else {
+        @Suppress("DEPRECATION")
+        windowManager.defaultDisplay
+    }
+    val refreshRate = display?.refreshRate ?: 60f
+
+    val infiniteTransition = androidx.compose.animation.core.rememberInfiniteTransition()
+    val xOffset by infiniteTransition.animateFloat(
+        initialValue = -400f,
+        targetValue = 400f,
+        animationSpec = androidx.compose.animation.core.infiniteRepeatable(
+            animation = androidx.compose.animation.core.tween((1000f * (120f / refreshRate)).toInt(), easing = androidx.compose.animation.core.LinearEasing),
+            repeatMode = androidx.compose.animation.core.RepeatMode.Reverse
+        ),
+        label = "xOffset"
+    )
+
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+        Text("Display Refresh Rate", fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 16.dp))
+        Text("Reported Rate: ${refreshRate.toInt()} Hz", fontSize = 18.sp, modifier = Modifier.padding(bottom = 32.dp))
+        
+        Box(modifier = Modifier.fillMaxWidth().height(100.dp), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier
+                .graphicsLayer { translationX = xOffset }
+                .size(50.dp)
+                .background(Color.Red, androidx.compose.foundation.shape.CircleShape)
+            )
+        }
+        
+        Spacer(modifier = Modifier.height(32.dp))
+        Button(onClick = onClose) { Text("Close") }
+    }
+}
+
+@Composable
+fun BurnInTest(onClose: () -> Unit) {
+    var colorIndex by remember { mutableStateOf(0) }
+    val colors = listOf(Color.Red, Color.Green, Color.Blue, Color.White, Color.Black)
+    
+    LaunchedEffect(Unit) {
+        while (true) {
+            kotlinx.coroutines.delay(2000)
+            colorIndex = (colorIndex + 1) % colors.size
+        }
+    }
+    
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(colors[colorIndex])
+        .pointerInput(Unit) {
+            detectTapGestures {
+                colorIndex = (colorIndex + 1) % colors.size
+            }
+        },
+        contentAlignment = Alignment.Center
+    ) {
+        Button(onClick = onClose, modifier = Modifier.padding(32.dp)) {
+            Text("End Burn-in Fixer")
         }
     }
 }

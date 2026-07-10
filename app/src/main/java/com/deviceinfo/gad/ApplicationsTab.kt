@@ -541,7 +541,7 @@ fun AppRow(
         
         AnimatedVisibility(visible = isExpanded && !isSelectionMode) {
             Column(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))) {
-                Divider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly

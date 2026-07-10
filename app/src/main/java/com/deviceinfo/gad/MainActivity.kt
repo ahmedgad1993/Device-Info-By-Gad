@@ -31,6 +31,10 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.Color
 import androidx.compose.animation.core.animateDp
 import androidx.compose.ui.draw.scale
@@ -62,6 +66,10 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity() {
             "CSV" -> generateExportCsv()
             else -> generateExportReport()
         }
+        if (format == "PDF") {
+            ExportUtil.exportAsPdf(this, data)
+            return
+        }
         val extension = format.lowercase()
         val mimeType = if (format == "JSON") "application/json" else if (format == "CSV") "text/csv" else "text/plain"
         
@@ -76,7 +84,7 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity() {
             }
             startActivity(android.content.Intent.createChooser(intent, "Export Report"))
         } catch (e: Exception) {
-            e.printStackTrace()
+            android.util.Log.e("MainActivity", "Export error", e)
         }
     }
 
@@ -160,7 +168,7 @@ class MainActivity : androidx.appcompat.app.AppCompatActivity() {
     override fun attachBaseContext(newBase: Context) {
         val prefs = newBase.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val lang = prefs.getString("language", "en") ?: "en"
-        val locale = Locale(lang)
+        val locale = Locale.forLanguageTag(lang)
         Locale.setDefault(locale)
         val config = Configuration(newBase.resources.configuration)
         config.setLocale(locale)
@@ -253,6 +261,12 @@ fun AppMainScreen(
                         showExportDialog = false; onExportFormatClicked("TXT") 
                     }, modifier = Modifier.fillMaxWidth()) {
                         Text(stringResource(R.string.ui_export_as_txt))
+                    }
+                    Button(onClick = { 
+                        haptic.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
+                        showExportDialog = false; onExportFormatClicked("PDF") 
+                    }, modifier = Modifier.fillMaxWidth()) {
+                        Text("Export as PDF")
                     }
                     Button(onClick = { 
                         haptic.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
@@ -424,11 +438,13 @@ fun AppMainScreen(
                     val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
                     val scale = if (animsEnabled) 1f - (kotlin.math.abs(pageOffset) * 0.15f).coerceIn(0f, 1f) else 1f
                     val alpha = if (animsEnabled) 1f - (kotlin.math.abs(pageOffset) * 0.5f).coerceIn(0f, 1f) else 1f
+                    val parallax = if (animsEnabled) pageOffset * 150f else 0f
                     
                     Box(modifier = Modifier.fillMaxSize().graphicsLayer {
                         scaleX = scale
                         scaleY = scale
                         this.alpha = alpha
+                        this.translationX = parallax
                     }) {
                             when (page) {
                                 0 -> DashboardTab(cpuHardwareViewModel, batteryNetworkViewModel)
@@ -687,7 +703,35 @@ fun DashboardMetricCard(title: String, value: String, icon: androidx.compose.ui.
 
 @Composable
 fun DashboardTrendCard(title: String, value: String, icon: androidx.compose.ui.graphics.vector.ImageVector, color: Color, progress: Float, history: List<Float>, modifier: Modifier = Modifier) {
-    com.deviceinfo.gad.ui.components.GlassCard(modifier = modifier) {
+    val isCritical = progress > 0.85f
+    val pulseAlphaState = if (isCritical) {
+        val infiniteTransition = androidx.compose.animation.core.rememberInfiniteTransition()
+        infiniteTransition.animateFloat(
+            initialValue = 0.1f,
+            targetValue = 0.6f,
+            animationSpec = androidx.compose.animation.core.infiniteRepeatable(
+                animation = androidx.compose.animation.core.tween(800, easing = androidx.compose.animation.core.FastOutSlowInEasing),
+                repeatMode = androidx.compose.animation.core.RepeatMode.Reverse
+            )
+        )
+    } else {
+        remember { mutableStateOf(0f) }
+    }
+    
+    val pulseAlpha = pulseAlphaState.value
+    val errorColor = MaterialTheme.colorScheme.error
+    val glowModifier = if (isCritical) {
+        Modifier.drawBehind {
+            drawRoundRect(
+                color = errorColor.copy(alpha = pulseAlpha),
+                size = size,
+                cornerRadius = androidx.compose.ui.geometry.CornerRadius(24.dp.toPx(), 24.dp.toPx()),
+                style = androidx.compose.ui.graphics.drawscope.Stroke(width = 4.dp.toPx())
+            )
+        }
+    } else Modifier
+
+    com.deviceinfo.gad.ui.components.GlassCard(modifier = modifier.then(glowModifier)) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Icon(icon, contentDescription = null, tint = color, modifier = Modifier.size(24.dp))
             Text(title, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)

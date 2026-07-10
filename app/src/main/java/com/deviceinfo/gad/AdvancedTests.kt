@@ -269,7 +269,7 @@ fun MicTest(onClose: () -> Unit) {
                 }
             }
         } catch(e: Exception) {
-            e.printStackTrace()
+            android.util.Log.e("AdvancedTests", "Error", e)
         }
         onDispose {
             scope?.cancel()
@@ -304,12 +304,13 @@ fun SpeakerTest(onClose: () -> Unit) {
         scope.launch {
             val sampleRate = 44100
             val numSamples = sampleRate * 1 
-            val sample = ShortArray(numSamples)
+            val sample = ShortArray(numSamples * 2)
             val freq = 440.0
             
             for (i in 0 until numSamples) {
                 val value = Math.sin(2 * Math.PI * i / (sampleRate / freq)) * Short.MAX_VALUE
-                sample[i] = value.toInt().toShort()
+                sample[i * 2] = (value.toInt() * leftVol).toInt().toShort()
+                sample[i * 2 + 1] = (value.toInt() * rightVol).toInt().toShort()
             }
             
             val track = android.media.AudioTrack.Builder()
@@ -319,13 +320,13 @@ fun SpeakerTest(onClose: () -> Unit) {
                 .setAudioFormat(AudioFormat.Builder()
                     .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
                     .setSampleRate(sampleRate)
-                    .setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build())
+                    .setChannelMask(AudioFormat.CHANNEL_OUT_STEREO).build())
                 .setBufferSizeInBytes(sample.size * 2)
                 .setTransferMode(android.media.AudioTrack.MODE_STATIC)
                 .build()
             
             track.write(sample, 0, sample.size)
-            track.setStereoVolume(leftVol, rightVol)
+            track.setVolume(android.media.AudioTrack.getMaxVolume())
             track.play()
             delay(1000)
             track.release()
@@ -422,7 +423,7 @@ fun HapticsTest(onClose: () -> Unit) {
                 vibrator?.vibrate(timings, -1)
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            android.util.Log.e("AdvancedTests", "Error", e)
         }
     }
 
